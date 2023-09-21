@@ -7838,7 +7838,6 @@ void LocationsBuilderX86::VisitCheckCast(HCheckCast* instruction) {
   } else {
     locations->SetInAt(1, Location::Any());
   }
-  // Add temps for read barriers and other uses. One is used by TypeCheckSlowPathX86.
   locations->AddRegisterTemps(NumberOfCheckCastTemps(type_check_kind));
 }
 
@@ -8026,11 +8025,11 @@ void InstructionCodeGeneratorX86::VisitCheckCast(HCheckCast* instruction) {
                                         kWithoutReadBarrier);
 
       // /* HeapReference<Class> */ temp = temp->iftable_
-      GenerateReferenceLoadTwoRegisters(instruction,
-                                        temp_loc,
-                                        temp_loc,
-                                        iftable_offset,
-                                        kWithoutReadBarrier);
+      GenerateReferenceLoadOneRegister(instruction,
+                                       temp_loc,
+                                       iftable_offset,
+                                       maybe_temp2_loc,
+                                       kWithoutReadBarrier);
       // Iftable is never null.
       __ movl(maybe_temp2_loc.AsRegister<Register>(), Address(temp, array_length_offset));
       // Maybe poison the `cls` for direct comparison with memory.
