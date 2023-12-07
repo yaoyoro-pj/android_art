@@ -1464,7 +1464,7 @@ void IntrinsicCodeGeneratorARMVIXL::VisitSystemArrayCopy(HInvoke* invoke) {
             invoke, temp1_loc, temp1, component_offset, temp2_loc, /* needs_null_check= */ false);
         __ CompareAndBranchIfZero(temp1, intrinsic_slow_path->GetEntryLabel());
         // If heap poisoning is enabled, `temp1` has been unpoisoned
-        // by the the previous call to GenerateFieldLoadWithBakerReadBarrier.
+        // by the previous call to GenerateFieldLoadWithBakerReadBarrier.
         // /* uint16_t */ temp1 = static_cast<uint16>(temp1->primitive_type_);
         __ Ldrh(temp1, MemOperand(temp1, primitive_offset));
         static_assert(Primitive::kPrimNot == 0, "Expected 0 for kPrimNot");
@@ -1488,7 +1488,7 @@ void IntrinsicCodeGeneratorARMVIXL::VisitSystemArrayCopy(HInvoke* invoke) {
             invoke, temp2_loc, temp1, component_offset, temp3_loc, /* needs_null_check= */ false);
         __ CompareAndBranchIfZero(temp2, intrinsic_slow_path->GetEntryLabel());
         // If heap poisoning is enabled, `temp2` has been unpoisoned
-        // by the the previous call to GenerateFieldLoadWithBakerReadBarrier.
+        // by the previous call to GenerateFieldLoadWithBakerReadBarrier.
         // /* uint16_t */ temp2 = static_cast<uint16>(temp2->primitive_type_);
         __ Ldrh(temp2, MemOperand(temp2, primitive_offset));
         static_assert(Primitive::kPrimNot == 0, "Expected 0 for kPrimNot");
@@ -1593,7 +1593,7 @@ void IntrinsicCodeGeneratorARMVIXL::VisitSystemArrayCopy(HInvoke* invoke) {
           invoke, temp3_loc, temp1, component_offset, temp2_loc, /* needs_null_check= */ false);
       __ CompareAndBranchIfZero(temp3, intrinsic_slow_path->GetEntryLabel());
       // If heap poisoning is enabled, `temp3` has been unpoisoned
-      // by the the previous call to GenerateFieldLoadWithBakerReadBarrier.
+      // by the previous call to GenerateFieldLoadWithBakerReadBarrier.
     } else {
       // /* HeapReference<Class> */ temp1 = src->klass_
       __ Ldr(temp1, MemOperand(src, class_offset));
