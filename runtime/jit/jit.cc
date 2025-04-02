@@ -65,11 +65,6 @@ static constexpr bool kEnableOnStackReplacement = true;
 static constexpr uint32_t kJitMaxThreshold = std::numeric_limits<uint16_t>::max();
 
 static constexpr uint32_t kJitDefaultOptimizeThreshold = 0xffff;
-// Different optimization threshold constants. These default to the equivalent optimization
-// thresholds divided by 2, but can be overridden at the command-line.
-static constexpr uint32_t kJitStressDefaultOptimizeThreshold = kJitDefaultOptimizeThreshold / 2;
-static constexpr uint32_t kJitSlowStressDefaultOptimizeThreshold =
-    kJitStressDefaultOptimizeThreshold / 2;
 
 static constexpr uint32_t kJitDefaultWarmupThreshold = 0xffff;
 // Different warm-up threshold constants. These default to the equivalent warmup thresholds divided
@@ -105,12 +100,7 @@ JitOptions* JitOptions::CreateFromRuntimeArguments(const RuntimeArgumentMap& opt
       options.GetOrDefault(RuntimeArgumentMap::JITZygotePoolThreadPthreadPriority);
 
   // Set default optimize threshold to aid with checking defaults.
-  jit_options->optimize_threshold_ =
-      kIsDebugBuild
-      ? (Jit::kSlowMode
-         ? kJitSlowStressDefaultOptimizeThreshold
-         : kJitStressDefaultOptimizeThreshold)
-      : kJitDefaultOptimizeThreshold;
+  jit_options->optimize_threshold_ = kJitDefaultOptimizeThreshold;
 
   // Set default warm-up threshold to aid with checking defaults.
   jit_options->warmup_threshold_ =
